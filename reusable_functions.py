@@ -1,5 +1,4 @@
 import random
-def input_until_in_range(prompt,range_tuple):
     range_var=range(range_tuple[0],range_tuple[1])
     while True:
         try:
@@ -11,7 +10,7 @@ def input_until_in_range(prompt,range_tuple):
         except ValueError:
             print("That is not a number")
     
-    
+
 
 def input_until_equal_except_excluded(prompt,error_prompt,valid_values,*invalid_values):
     while True:
