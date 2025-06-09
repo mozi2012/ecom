@@ -1,4 +1,5 @@
 import random
+def input_until_in_range(prompt,range_tuple): 
     range_var=range(range_tuple[0],range_tuple[1])
     while True:
         try:
