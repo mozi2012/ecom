@@ -11,6 +11,7 @@ def input_until_in_range(prompt,range_tuple):
         except ValueError:
             print("That is not a number")
     
+    
 
 def input_until_equal_except_excluded(prompt,error_prompt,valid_values,*invalid_values):
     while True:
