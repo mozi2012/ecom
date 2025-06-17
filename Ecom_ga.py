@@ -118,8 +118,8 @@ def trade(settings,current_player_num,player_saves):
     wanted_resource=["potato","2"]
     wanted_resource_path=find_path(wanted_resource,player_saves[current_player_num]["resoures"])
     players_interested=ask_interested_in_trade(player_saves,current_player_num,settings,wanted_resource,wanted_resource_path)
-    print
-
+    print("players_interested:"+str(players_interested))
+    
 
 
 
