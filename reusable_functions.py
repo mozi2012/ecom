@@ -31,6 +31,7 @@ def input_until_equal_except_excluded(prompt,error_prompt,valid_values,*invalid_
             continue   
         
         counter=0
+        print(valid_values)
         while counter<len(valid_values):
             if input_value == valid_values[counter].lower():
                 return input_value

@@ -35,8 +35,8 @@ def create_players(player_amount):
     while counter < player_amount:
         print("player"+str(counter+1))
         #pro=input_until_equal("choose your profession. farmer,hunter:","farmer","hunter")
-        #pro="farmer"
-        pro="hunter"
+        pro="farmer"
+        #pro="hunter"
         player_saves[counter]["profession"]=pro
         player_saves[counter]["resoures"]=resoures
         if pro=="farmer":
@@ -65,29 +65,42 @@ def print_player_resources(player_saves,current_player_num):
         print(resource+":"+str(amount))
     print("")
 
-def offer(wanted_resource_amount_SubPL,current_player_name_MainPL):
-    input_until_in_range("how much do you want to trade?("+ +")+"":",(1,1000))
+def offer(wanted_resource_amount_SubPL,amount_of_resource_wanted_MainPL,current_player_name_MainPL):
+    print("offer")
+    print("wanted_resource_amount_SubPL:"+str(wanted_resource_amount_SubPL))
+    offered_amount=input_until_in_range("how much do you want to trade?("+str(current_player_name_MainPL)+" wants "+str(amount_of_resource_wanted_MainPL)+" and you have:"+str(wanted_resource_amount_SubPL)+"):",(1,wanted_resource_amount_SubPL+1))
+    return offered_amount
 
 def ask_interested_in_trade(player_saves,current_player_num_MainPL,settings,wanted_resource_MainPL,wanted_resource_path):
     print("")
     print("")
     print("")
+    print("0")
     #text=settings["player names"][x]+" do you want to trade your "+wanted_resource+" with "+settings["player names"][current_player_num]+"? (y/n)"
     players_interested={}
     for x in range(settings["player amount"]):
         if x!=current_player_num_MainPL:
+            print("1 "+"L:"+str(x))
+            #print(wanted_resource_path)
             wanted_resource_amount_SubPL=player_saves[x]["resoures"][wanted_resource_path[0]][wanted_resource_MainPL[0]]
+            print(wanted_resource_amount_SubPL)
             if wanted_resource_amount_SubPL>0: 
-                if input_until_equal(settings["player names"][x]+" do you want to trade your "+wanted_resource_MainPL[0]+" with "+settings["player names"][current_player_num_MainPL]+"? (y/n)",("y","n")).lower() =="y":
-                    offer(wanted_resource_amount_SubPL,wanted_resource_MainPL[1],settings["player names"][current_player_num_MainPL])
+                print("2 "+"L:"+str(x))
+                if input_until_equal(settings["player names"][x]+" do you want to trade your "+wanted_resource_MainPL[0]+" with "+settings["player names"][current_player_num_MainPL]+"? (y/n):",("y","n")).lower() =="y":
+                    print("3 "+"L:"+str(x))
+                    players_interested[settings["player names"][current_player_num_MainPL]]=offer(wanted_resource_amount_SubPL,wanted_resource_MainPL[1],settings["player names"][current_player_num_MainPL])
+    return players_interested
 
 def find_path(wanted_resource,resources):
     path=[]
     for category,items in resources.items():
         for item in items.keys():
+            #print("item:"+str(item)," wanted_resource:"+str(wanted_resource))
             if item==wanted_resource[0]:
                 path.append(category)
+                #print(path)
                 path.append(item)
+                print(path)
                 return path
             
 def ask_resource(player_saves,current_player_num,settings):
@@ -101,10 +114,16 @@ def trade(settings,current_player_num,player_saves):
     if settings["player amount"]==1:
         print("there's no one around to trade with")
         return ""
-    wanted_resource=ask_resource(player_saves,current_player_num,settings)
+    #wanted_resource=ask_resource(player_saves,current_player_num,settings)
+    wanted_resource=["potato","2"]
     wanted_resource_path=find_path(wanted_resource,player_saves[current_player_num]["resoures"])
-    #print(path_to_wanted_resource)
-    ask_interested_in_trade(player_saves,current_player_num,settings,wanted_resource,wanted_resource_path)
+    players_interested=ask_interested_in_trade(player_saves,current_player_num,settings,wanted_resource,wanted_resource_path)
+    print
+
+
+
+
+
     enterable_values=settings["player names"].append("cancel")         
     print_player_names(settings,current_player_num)
     player_chosen=input_until_equal_except_excluded(text["1"],text["2"],enterable_values,settings["player names"][current_player_num])
@@ -134,7 +153,8 @@ def choose_event(settings,player_saves,current_player_num):
     current_player_save=player_saves[current_player_num]
     current_player_events=settings["events"][current_player_num]
     while True:
-        choice=input_until_equal(add_events_to_text("choose an option: ",current_player_events),current_player_events)
+        #choice=input_until_equal(add_events_to_text("choose an option: ",current_player_events),current_player_events)
+        choice="trade"
         choice="trade"
         if choice=="trade":
                updated_player_save=trade(settings,current_player_num,player_saves)
